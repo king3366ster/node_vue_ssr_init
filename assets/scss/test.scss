@@ -1,6 +1,7 @@
 $color_red: #900;
 
 .solution {
+  display: border-box;
   h1 {
     color: $color_red;
   }
