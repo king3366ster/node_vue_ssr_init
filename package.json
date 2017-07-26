@@ -5,9 +5,11 @@
   "author": "hzchensheng15 <hzchensheng15@corp.netease.com>",
   "private": true,
   "dependencies": {
+    "autoprefixer": "^7.1.2",
     "node-sass": "^4.5.3",
     "nuxt": "^1.0.0-alpha.5",
     "postcss-cssnext": "^3.0.2",
+    "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.6",
     "postcss-scss": "^1.0.2",
     "precss": "^2.0.0",

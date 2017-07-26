@@ -1,7 +1,8 @@
 $color_red: #900;
 
 .solution {
-  display: border-box;
+  display: flex;
+  transition: all 1s;
   h1 {
     color: $color_red;
   }

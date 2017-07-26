@@ -28,35 +28,9 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    // loaders: [
-    //   {
-    //     test: /\.css$/,
-    //     loader: 'vue-style-loader!css-loader'
-    //   },
-    //   {
-    //     test: /\.scss$/,
-    //     loader: 'style!css!postcss!postcss-cssnext'
-    //   },
-    //   {
-    //     test: /\.(png|jpe?g|gif|svg)$/,
-    //     loader: 'url-loader',
-    //     query: {
-    //       limit: 1000, // 1KO
-    //       name: 'img/[name].[hash:7].[ext]'
-    //     }
-    //   },
-    //   {
-    //     test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-    //     loader: 'url-loader',
-    //     query: {
-    //       limit: 1000, // 1 KO
-    //       name: 'fonts/[name].[hash:7].[ext]'
-    //     }
-    //   }
-    // ],
     postcss: [
-      require('precss')(),
-      require('postcss-cssnext')({
+      require('postcss-import')(),
+      require('autoprefixer')({
         browsers: ['Android >= 4', 'iOS >= 7', 'Chrome >= 10', 'Firefox >= 10', 'IE >= 10']
       })
     ],
@@ -68,6 +42,8 @@ module.exports = {
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
+        const cssLoader = config.module.rules.find((loader) => loader.test.toString() === '/\\.css$/')
+        cssLoader.use.push('postcss-loader')
       }
     }
   }
