@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="solution">
     <h1>Hello solution!</h1>
     <input id="demo" type="file">
     <button id="submit" v-on:click="uploadFile">提交</button>
