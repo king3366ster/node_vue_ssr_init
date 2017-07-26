@@ -20,6 +20,13 @@
 import Logo from '~components/Logo.vue'
 
 export default {
+  head: {
+    title: '网易云通信与视频|真正稳定的IM即时通讯云服务',
+    meta: [
+      { hid: 'keywords', name: 'keywords', content: '网易云信,云信,网易云,通信与视频,即时通讯,IM,即时通讯云,IM云,云服务' },
+      { hid: 'description', name: 'description', content: '云信是网易公司倾力打造的基于PaaS的即时通讯IM云服务,开发者通过集成云信客户端SDK和云端OPEN API,即可快速接入强大的IM功能。' }
+    ]
+  },
   components: {
     Logo
   }
