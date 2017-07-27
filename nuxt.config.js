@@ -1,7 +1,4 @@
 module.exports = {
-  /*
-  ** Headers of the page
-  */
   head: {
     title: '官网测试',
     meta: [
@@ -24,6 +21,12 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#3B8070' },
+  cache: {
+    // 缓存组件的最大数目，当第 1001 个组件被添加至缓存中时， 第一个被缓存的组件会从缓存中移除。
+    max: 1000,
+    // 缓存时间，单位毫秒
+    maxAge: 60000 * 10
+  },
   /*
   ** Build configuration
   */
@@ -42,6 +45,7 @@ module.exports = {
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
+        config.devtool = 'eval-source-map'
         const cssLoader = config.module.rules.find((loader) => loader.test.toString() === '/\\.css$/')
         cssLoader.use.push('postcss-loader')
       }

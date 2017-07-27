@@ -6,8 +6,29 @@
   "private": true,
   "dependencies": {
     "autoprefixer": "^7.1.2",
+    "express": "^4.15.3",
     "node-sass": "^4.5.3",
-    "nuxt": "^1.0.0-alpha.5",
+    "nuxt": "^1.0.0-alpha.5"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev node app",
+    "build": "nuxt build",
+    "start": "node app",
+    "nuxt_dev": "nuxt",
+    "nuxt_start": "nuxt start",
+    "nuxt_generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "cross-env": "^5.0.1",
+    "eslint": "^3.15.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-loader": "^1.6.1",
+    "eslint-plugin-html": "^2.0.0",
+    "eslint-plugin-promise": "^3.4.1",
+    "eslint-plugin-standard": "^2.0.1",
     "postcss-cssnext": "^3.0.2",
     "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.6",
@@ -15,22 +36,5 @@
     "precss": "^2.0.0",
     "sass-loader": "^6.0.6",
     "scss": "^0.2.4"
-  },
-  "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
-  },
-  "devDependencies": {
-    "babel-eslint": "^7.1.1",
-    "eslint": "^3.15.0",
-    "eslint-config-standard": "^6.2.1",
-    "eslint-loader": "^1.6.1",
-    "eslint-plugin-html": "^2.0.0",
-    "eslint-plugin-promise": "^3.4.1",
-    "eslint-plugin-standard": "^2.0.1"
   }
 }

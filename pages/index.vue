@@ -3,7 +3,7 @@
     <div>
       <logo/>
       <h1 class="title">
-        NUXT
+        HELLO TEST NUXT
       </h1>
       <h2 class="subtitle">
         Universal Vue.js Application
