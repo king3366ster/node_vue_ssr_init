@@ -116,6 +116,14 @@ async function createApp (ssrContext) {
 
   // Inject external plugins
   
+  if (process.browser) {
+    let plugin0 = require('~plugins/ga.js')
+    plugin0 = plugin0.default || plugin0
+    if (typeof plugin0 === 'function') {
+      await plugin0(ctx)
+    }
+  }
+  
 
   return { app, router, store }
 }

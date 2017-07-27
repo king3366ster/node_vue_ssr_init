@@ -3,14 +3,10 @@ module.exports = {
     title: '官网测试',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Nuxt.js project' }
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      // {
-      //   rel: 'stylesheet', href: '/assets/main.css'
-      // }
     ],
   },
   css: [
@@ -27,6 +23,12 @@ module.exports = {
     // 缓存时间，单位毫秒
     maxAge: 60000 * 10
   },
+  router: {
+    middleware: []
+  },
+  plugins: [
+    { src: '~plugins/ga.js', ssr: false }
+  ],
   /*
   ** Build configuration
   */
