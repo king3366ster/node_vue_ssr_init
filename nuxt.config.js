@@ -33,7 +33,7 @@ module.exports = {
   build: {
     postcss: [
       require('postcss-import')(),
-      require('autoprefixer')({
+      require('postcss-cssnext')({
         browsers: ['Android >= 4', 'iOS >= 7', 'Chrome >= 10', 'Firefox >= 10', 'IE >= 10']
       })
     ],
