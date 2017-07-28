@@ -70,7 +70,7 @@ export default async (context) => {
   
   await promise
   // Call global middleware (nuxt.config.js)
-  let midd = []
+  let midd = ["test"]
   midd = midd.map((name) => {
     if (typeof middleware[name] !== 'function') {
       context.nuxt.error = context.error({ statusCode: 500, message: 'Unknown middleware ' + name })

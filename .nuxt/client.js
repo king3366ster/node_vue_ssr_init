@@ -56,7 +56,7 @@ function loadAsyncComponents (to, from, next) {
 
 function callMiddleware (Components, context, layout) {
   // if layout is undefined, only call global middleware
-  let midd = []
+  let midd = ["test"]
   let unknownMiddleware = false
   if (typeof layout !== 'undefined') {
     midd = [] // exclude global middleware if layout defined (already called before)

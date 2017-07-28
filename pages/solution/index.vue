@@ -4,6 +4,7 @@
     <input id="demo" type="file">
     <button id="submit" v-on:click="uploadFile">提交</button>
     <a href="/solution/test">/solution/test</a>
+    date: {{$store.state.pageData.date}}
   </div>
 </template>
 

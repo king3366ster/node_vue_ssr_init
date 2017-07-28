@@ -24,7 +24,7 @@ module.exports = {
     maxAge: 60000 * 10
   },
   router: {
-    middleware: []
+    middleware: ['test']
   },
   plugins: [
     { src: '~plugins/ga.js', ssr: false }
