@@ -44,11 +44,16 @@ server.use('/css', staticServer('public/css', true))
 server.use('/res', staticServer('public/res', true))
 server.use('/dist', staticServer('dist', true))
 
+
 // 页面渲染
 const createRenderer = (bundle, options) => {
   return createBundleRenderer(bundle, Object.assign(options, {
     template,
-    cache: bundleCache
+    cache: bundleCache,
+    // this is only needed when vue-server-renderer is npm-linked
+    basedir: resolve('./dist'),
+    // recommended for performance
+    runInNewContext: false
   }))
 }
 
@@ -60,6 +65,15 @@ if (isDev) {
   // 动态babel编译
   readyPromise = require('./build/setup-dev-server')(server, (bundle, options) => {
     renderer = createRenderer(bundle, options)
+  })
+} else {
+  const bundle = require('./dist/vue-ssr-server-bundle.json')
+  // The client manifests are optional, but it allows the renderer
+  // to automatically infer preload/prefetch links and directly add <script>
+  // tags for any async chunks used during render, avoiding waterfall requests.
+  const clientManifest = require('./dist/vue-ssr-client-manifest.json')
+  renderer = createRenderer(bundle, {
+    clientManifest
   })
 }
 
@@ -109,9 +123,9 @@ const render = (req, res) => {
 }
 
 // 侦听服务
-server.get('*', (req, res) => {
+server.get('*', isDev ? (req, res) => {
   readyPromise.then(() => render(req, res))
-})
+} : render)
 
 const port = process.env.PORT || 7002
 server.listen(port, () => {
