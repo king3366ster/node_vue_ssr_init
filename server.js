@@ -39,6 +39,12 @@ const template = fs.readFileSync(resolve('templates/index.html'), 'utf-8')
 const template404 = fs.readFileSync(resolve('templates/404.html'), 'utf-8')
 
 /* 渲染器 */
+// 静态资源服务
+server.use('/css', staticServer('public/css', true))
+server.use('/res', staticServer('public/res', true))
+server.use('/dist', staticServer('dist', true))
+
+// 页面渲染
 const createRenderer = (bundle, options) => {
   return createBundleRenderer(bundle, Object.assign(options, {
     template,
@@ -49,6 +55,7 @@ const createRenderer = (bundle, options) => {
 let renderer
 let readyPromise
 
+// 启动同构渲染
 if (isDev) {
   // 动态babel编译
   readyPromise = require('./build/setup-dev-server')(server, (bundle, options) => {
@@ -59,7 +66,7 @@ if (isDev) {
 // 页面渲染函数
 const render = (req, res) => {
   let reqTime = Date.now()
-  res.setHeader("Content-Type", "text/html")
+  res.setHeader('Content-Type', 'text/html')
 
   const handleError = err => {
     if (err.url) {
@@ -86,6 +93,7 @@ const render = (req, res) => {
     title: '网易云信', // default title
     url: req.url
   }
+
   renderer.renderToString(context, (err, html) => {
     if (err) {
       return handleError(err)
@@ -100,12 +108,10 @@ const render = (req, res) => {
   })
 }
 
+// 侦听服务
 server.get('*', (req, res) => {
   readyPromise.then(() => render(req, res))
 })
-
-server.use('/dist', staticServer('./dist', true))
-server.use('/public', staticServer('./public', true))
 
 const port = process.env.PORT || 7002
 server.listen(port, () => {
