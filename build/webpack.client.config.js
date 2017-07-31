@@ -7,11 +7,6 @@ const config = merge(base, {
   entry: {
     app: './src/entry-client.js'
   },
-  resolve: {
-    alias: {
-      'create-api': './create-api-client.js'
-    }
-  },
   plugins: [
     // strip dev-only code in Vue source
     new webpack.DefinePlugin({
@@ -22,11 +17,11 @@ const config = merge(base, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: function (module) {
-        // a module is extracted into the vendor chunk if...
+        // 从 NPM 依赖模块导入 CSS
         return (
-          // it's inside node_modules
+          // 如果它在 node_modules 中
           /node_modules/.test(module.context) &&
-          // and not a CSS file (due to extract-text-webpack-plugin limitation)
+          // 如果 request 是一个 CSS 文件，则无需外置化提取
           !/\.css$/.test(module.request)
         )
       }
@@ -34,7 +29,8 @@ const config = merge(base, {
     // extract webpack runtime & manifest to avoid vendor chunk hash changing
     // on every build.
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest'
+      name: 'manifest',
+      minChunks: Infinity
     }),
     new VueSSRClientPlugin()
   ]

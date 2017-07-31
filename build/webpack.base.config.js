@@ -45,10 +45,10 @@ module.exports = {
       {
         test: /\.css$/,
         use: isDev
-          ? ['vue-style-loader', 'css-loader']
+          ? ['vue-style-loader', 'css-loader', 'postcss-loader']
           : ExtractTextPlugin.extract({
               use: 'css-loader?minimize',
-              fallback: 'vue-style-loader'
+              fallback: 'vue-style-loader!postcss-loader!postcss-cssnext'
             })
       }
     ]
@@ -65,6 +65,7 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin({
           compress: { warnings: false }
         }),
+        // 将css单独提取到文件中
         new ExtractTextPlugin({
           filename: 'common.[chunkhash].css'
         })
