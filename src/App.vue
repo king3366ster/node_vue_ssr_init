@@ -10,9 +10,8 @@
 </template>
 
 <script>
+import seo from '~/plugins/seo.js'
 export default {
-  data () {
-    return {}
-  } 
+
 }
 </script>

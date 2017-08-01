@@ -5,6 +5,9 @@ const express = require('express')
 const resolve = filename => path.join(__dirname, filename)
 const { createBundleRenderer } = require('vue-server-renderer')
 
+// 初始化获取数据库数据
+const queryData = require(resolve('model/queryData'))
+
 const isDev = process.env.NODE_ENV === 'development'
 
 const server = express()
@@ -18,7 +21,7 @@ const staticServer = (path, cache) => express.static(resolve(path), {
 // 动态页面缓存
 const microCache = LRU({
   max: 100,
-  maxAge: 1000
+  maxAge: 1000 * 60
 })
 
 // 组件cache
@@ -30,7 +33,7 @@ const bundleCache = LRU({
   runInNewContext: false
 })
 
-const cacheable = !isDev
+const cacheable = true // !isDev
 
 /* 静态资源模板 */
 // 默认模板
@@ -96,6 +99,7 @@ const render = (req, res) => {
     }
   }
 
+  // 页面级别缓存
   if (cacheable) {
     const hit = microCache.get(req.url)
     if (hit) {
@@ -103,22 +107,46 @@ const render = (req, res) => {
     }
   }
 
-  const context = {
-    title: '网易云信', // default title
+  let context = {
+    title: '网易云通信与视频', // default title
+    keywords: '',
+    description: '',
+    author: '',
+    robots: '',
     url: req.url
   }
+  
+  // 从数据库获取seo数据
+  let seoPromise = queryData('seomanager').then(data => {
+    let keyname = req.url
+    if (!data[keyname]) {
+      keyname = /^\/[^\/]+/.exec(keyname)
+      if (keyname) {
+        keyname = keyname[0]
+      }
+    }
+    if (data[keyname]) {
+      context = Object.assign(context, data[keyname])
+    }
+    return Promise.resolve()
+  }).catch(err => {
+    console.error('seo promise error: ', err)
+    return Promise.resolve()
+  })
 
-  renderer.renderToString(context, (err, html) => {
-    if (err) {
-      return handleError(err)
-    }
-    res.end(html)
-    if (cacheable) {
-      microCache.set(req.url, html)
-    }
-    if (isDev) {
-      console.log(`whole request: ${req.url} ${Date.now() - reqTime}ms`)
-    }
+  Promise.all([seoPromise]).then(() => {
+    renderer.renderToString(context, (err, html) => {
+      if (err) {
+        return handleError(err)
+      }
+      res.end(html)
+      if (cacheable) {
+        microCache.set(req.url, html)
+      }
+      if (isDev) {
+        console.log(`whole request: ${req.url} ${Date.now() - reqTime}ms`)
+      }
+    })
   })
 }
 

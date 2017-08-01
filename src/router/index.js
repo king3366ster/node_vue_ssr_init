@@ -5,6 +5,7 @@ Vue.use(Router)
 
 const HomePage = () => import('~/pages/index.vue')
 const SolutionPage = () => import('~/pages/solution.vue')
+const CasePage = () => import('~/pages/case.vue')
 
 export function createRouter () {
   return new Router({
@@ -13,7 +14,8 @@ export function createRouter () {
     routes: [
       // { path: '/new/:page(\\d+)?', component: createListView('new') },
       { path: '/', component: HomePage },
-      { path: '/solution/:id', component: SolutionPage }
+      { path: '/solution', component: SolutionPage },
+      { path: '/case/:id', component: CasePage }
     ]
   })
 }

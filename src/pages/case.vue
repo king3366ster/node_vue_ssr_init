@@ -8,13 +8,12 @@
 
 export default {
   asyncData ({ store, route }) {
-    return store.dispatch('getSolution')
+    return store.dispatch('getCase', route.params.id)
   },
   computed: {
     // 从 store 的 state 对象中的获取 item。
     item () {
-      console.log(this.$store.state.casetop)
-      return this.$store.state.solution.casetop
+      return this.$store.state.solution.casetopdetail
     }
   }
 }

@@ -10,6 +10,11 @@ module.exports = {
   devtool: isDev
     ? '#source-map'
     : false,
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+  },
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/dist/',
@@ -19,6 +24,7 @@ module.exports = {
     alias: {
       'public': path.resolve(__dirname, '../public'),
       '~': path.resolve(__dirname, '../src'),
+      '@': path.resolve(__dirname, '../'),
     }
   },
   module: {

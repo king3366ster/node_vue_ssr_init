@@ -3,16 +3,17 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-import actions from './actions'
-import mutations from './mutations'
-import state from './state'
-import getters from './getters'
+import state from '~/store/state'
+import solution from '~/store/modules/solution'
+import cases from '~/store/modules/case'
+
+let storeObj = Object.create({
+  state
+})
+
+storeObj = Object.assign(storeObj, solution)
+storeObj = Object.assign(storeObj, cases)
 
 export function createStore () {
-  return new Vuex.Store({
-    state,
-    actions,
-    mutations,
-    getters
-  })
+  return new Vuex.Store(storeObj)
 }

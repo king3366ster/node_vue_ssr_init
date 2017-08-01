@@ -2,7 +2,7 @@
   "name": "node-website",
   "version": "1.0.0",
   "description": "nim node website",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "dev": "run-p -lns builddev:*",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +12,7 @@
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules",
     "build:css": "cross-env NODE_ENV=production postcss ./public/postcss/*.css -c build/postcss.config.js -d ./public/css",
     "builddev:js": "cross-env NODE_ENV=development node server",
-    "builddev:css": "cross-env NODE_ENV=production postcss ./public/postcss/*.css -c build/postcss.config.js -d ./public/css --poll --watch"
+    "builddev:css": "cross-env NODE_ENV=development postcss ./public/postcss/*.css -c build/postcss.config.js -d ./public/css --poll --watch"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "cross-env": "^5.0.1",
     "express": "^4.15.3",
     "lru-cache": "^4.1.1",
+    "mysql": "^2.14.0",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0",
     "vue-server-renderer": "^2.4.2",
