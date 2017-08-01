@@ -8,11 +8,26 @@ import solution from '~/store/modules/solution'
 import cases from '~/store/modules/case'
 
 let storeObj = Object.create({
-  state
+  state,
+  actions: {},
+  mutations: {},
 })
 
-storeObj = Object.assign(storeObj, solution)
-storeObj = Object.assign(storeObj, cases)
+const merge = obj => {
+  let state = Object.assign(storeObj.state, obj.state)
+  let actions = Object.assign(storeObj.actions, obj.actions)
+  let mutations = Object.assign(storeObj.mutations, obj.mutations)
+  storeObj = Object.assign(storeObj, {
+    state,
+    actions,
+    mutations
+  })
+}
+
+merge(solution)
+merge(cases)
+
+console.log(storeObj)
 
 export function createStore () {
   return new Vuex.Store(storeObj)
