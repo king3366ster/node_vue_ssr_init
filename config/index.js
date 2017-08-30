@@ -11,7 +11,14 @@ let envConfig = {
       database : 'test'
     }
   },
-  test: {},
+  test: {
+    db: {
+      host: '10.240.76.144',
+      user: 'admin',
+      password : '123456',
+      database : 'test'
+    }
+  },
   prod: {
     db: {
       host: '10.240.76.144',

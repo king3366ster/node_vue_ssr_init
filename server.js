@@ -12,6 +12,13 @@ const isDev = process.env.NODE_ENV === 'development'
 
 const server = express()
 
+if (!isDev) {
+  const logger = require('./model/logger')
+  server.use(logger())
+}
+
+require('./model/handleError')
+
 /* 资源缓存设置 */
 // 静态目录资源缓存
 const staticServer = (path, cache) => express.static(resolve(path), {
@@ -116,37 +123,17 @@ const render = (req, res) => {
     url: req.url
   }
   
-  // 从数据库获取seo数据
-  let seoPromise = queryData('seomanager').then(data => {
-    let keyname = req.url
-    if (!data[keyname]) {
-      keyname = /^\/[^\/]+/.exec(keyname)
-      if (keyname) {
-        keyname = keyname[0]
-      }
+  renderer.renderToString(context, (err, html) => {
+    if (err) {
+      return handleError(err)
     }
-    if (data[keyname]) {
-      context = Object.assign(context, data[keyname])
+    res.end(html)
+    if (cacheable) {
+      microCache.set(req.url, html)
     }
-    return Promise.resolve()
-  }).catch(err => {
-    console.error('seo promise error: ', err)
-    return Promise.resolve()
-  })
-
-  Promise.all([seoPromise]).then(() => {
-    renderer.renderToString(context, (err, html) => {
-      if (err) {
-        return handleError(err)
-      }
-      res.end(html)
-      if (cacheable) {
-        microCache.set(req.url, html)
-      }
-      if (isDev) {
-        console.log(`whole request: ${req.url} ${Date.now() - reqTime}ms`)
-      }
-    })
+    if (isDev) {
+      console.log(`whole request: ${req.url} ${Date.now() - reqTime}ms`)
+    }
   })
 }
 
